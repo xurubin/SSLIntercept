@@ -27,6 +27,12 @@
 
 // Called when a request completes successfully, lets the delegate know via didFinishSelector
 - (void)requestFinished;
+
+// User-Agent for this request
+- (NSString *) userAgentString;
+
+- (NSMutableDictionary *) requestHeaders;
+
 @end
 
 static void logRequest(ASIHTTPRequest* self, NSString* name) {
@@ -62,6 +68,16 @@ static void logResponse(ASIHTTPRequest* self) {
     %orig;
 }
 
+- (void) buildRequestHeaders
+{
+    %orig;
+    
+    NSLog(@"Request Headers:");
+    NSMutableDictionary * headers = [self requestHeaders];
+    for(id key in headers) {
+        NSLog(@"----%@: %@", key, [headers objectForKey:key]);
+    }
+}
 // Called when a request completes successfully, lets the delegate know via didFinishSelector
 - (void)requestFinished 
 {
